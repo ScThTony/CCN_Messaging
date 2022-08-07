@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="CCN_BMS" Class="bmsContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=metasys;Initial Catalog=CCN_BMS;Persist Security Info=True;User ID=ccn_bms" SettingsObjectName="CCN_CameraService.Properties.Settings" SettingsPropertyName="CCN_BMSConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.StatusEventsLogs" Member="StatusEventsLogs">
+    <Type Name="StatusEventsLog">
+      <Column Name="PK" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Event" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Source" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="MessageSent" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MonitoringPoints" Member="MonitoringPoints">
+    <Type Name="MonitoringPoint">
+      <Column Name="RecordID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="itemFullyQualifiedReference" Type="System.String" DbType="NVarChar(400) NOT NULL" CanBeNull="false" />
+      <Column Name="AllowedDowntime" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Enabled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsAlarmState" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="LastEventID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="LastEventDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastActionID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Priority" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Location" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Equipment" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="ParentLocation" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="CameraKey" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Camera_MonitoringPoint" Member="Camera" ThisKey="CameraKey" OtherKey="PK" Type="Camera" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Cameras" Member="Cameras">
+    <Type Name="Camera">
+      <Column Name="PK" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MessagingEnabled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="NormalStateInterval" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CameraName" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="ObjectId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Association Name="Camera_MonitoringPoint" Member="MonitoringPoints" ThisKey="PK" OtherKey="CameraKey" Type="MonitoringPoint" />
+    </Type>
+  </Table>
+</Database>
